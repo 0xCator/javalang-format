@@ -50,6 +50,7 @@ typedef struct Lexer{
     const char *start;
     const char *current;
     int line;
+    const char *line_start;
 } Lexer;
 
 void init_lexer(char *input);

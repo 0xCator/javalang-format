@@ -35,6 +35,7 @@ void init_lexer(char *input){
     lexer.start = input;
     lexer.current = input;
     lexer.line = 1;
+    lexer.line_start = input;
 }
 
 static char advance(){
@@ -58,6 +59,7 @@ static void skip_whitespace(){
             case '\n':
                 lexer.line++;
                 advance();
+                lexer.line_start = lexer.current;
                 break;
             case '/':
                 if(peek() == '/'){
@@ -113,7 +115,7 @@ static Token token_new(TokenType type) {
     return (Token){
         .type = type,
         .line = lexer.line,
-        .column = length,
+        .column = lexer.start - lexer.line_start,
         .length = length,
         .lexeme = lexeme
     };
